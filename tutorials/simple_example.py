@@ -6,7 +6,7 @@ from lab2im.image_generator import ImageGenerator
 
 
 # path of the input label map
-path_label_map = './data_example/brain_label_map.nii.gz'
+path_label_map = 'data_example/lab2im/brain_label_map.nii.gz'
 # path where to save the generated image
 result_dir = './generated_images'
 

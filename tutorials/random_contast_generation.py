@@ -13,7 +13,7 @@ from lab2im.image_generator import ImageGenerator
 
 # label map to generate images from.
 # If you have several label maps, BrainGenerator also accepts the path to a directory that contains them.
-path_label_map = './data_example/brain_label_map.nii.gz'
+path_label_map = 'data_example/lab2im/brain_label_map.nii.gz'
 
 # general parameters
 n_examples = 5

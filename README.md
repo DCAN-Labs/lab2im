@@ -20,7 +20,7 @@ The following figure shows synthetic brain MRI scans generated whith lab2im. It 
 prior distributions when sampling the GMM parameters.
 \
 \
-![Generation examples](tutorials/data_example/figure.png)
+![Generation examples](tutorials/data_example/lab2im/figure.png)
 
 ----------------
 
