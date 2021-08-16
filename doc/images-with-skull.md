@@ -33,6 +33,6 @@ Here is the generated label map:
 
 The Skull and Head Extra-Cerebral locations are present and labeled correctly.
 
-However, if the skull is not present and labeled in the input label map,
+However, **if the skull is not present and labeled in the input label map**,
 then it will not be present in the generated images (with labels and without
 labels).  (How could it be?)
