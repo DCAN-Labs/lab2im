@@ -7,7 +7,7 @@ import sys
 
 def main(path_label_map='./data_example/brain_label_map.nii.gz', result_dir='./generated_images', n_examples=5,
          generation_labels='./data_example/generation_labels.npy',
-         prior_means='./data_example/prior_means.npy', prior_stds='./data_example/prior_stds.npy'):
+         prior_means='./data_example/prior_means.npy', prior_stds='./data_example/prior_stds.npy', contrast='t1'):
     """This tutorials generates 5 synthetic *T1-weighted* brain MRI scans from a label map.
     Specifically, it explains how to impose prior distributions on the GMM parameters, so that we can can generate
     images of desired intensity distribution.  By default the GMM parameters (means and standard deviations of each
@@ -29,6 +29,7 @@ def main(path_label_map='./data_example/brain_label_map.nii.gz', result_dir='./g
                    (default './data_example/prior_means.npy')
     prior_stds -- same as for prior_means, but for the standard deviations of the GMM.
                   (default  './data_example/prior_stds.npy')
+    contrast -- t1 or t2 (default 't1')
     """
     # instantiate BrainGenerator object
     brain_generator = ImageGenerator(labels_dir=path_label_map,
@@ -48,13 +49,13 @@ def main(path_label_map='./data_example/brain_label_map.nii.gz', result_dir='./g
 
         # save output image and label map
         utils.save_volume(im, brain_generator.aff, brain_generator.header,
-                          os.path.join(result_dir, 't1_%s.nii.gz' % n))
+                          os.path.join(result_dir, '%s_%s.nii.gz' % (contrast, n)))
         utils.save_volume(lab, brain_generator.aff, brain_generator.header,
-                          os.path.join(result_dir, 't1_labels_%s.nii.gz' % n))
+                          os.path.join(result_dir, '%s_labels_%s.nii.gz' % (contrast, n)))
 
 
 if __name__ == '__main__':
     pth_lbl_mp = sys.argv[1]
     rslt_dr = sys.argv[2]
-    main(pth_lbl_mp, rslt_dr, n_examples=int(sys.argv[3]), generation_labels=sys.argv[4], prior_means=sys.argv[7],
-         prior_stds=sys.argv[8])
+    main(pth_lbl_mp, rslt_dr, n_examples=int(sys.argv[3]), generation_labels=sys.argv[4], prior_means=sys.argv[5],
+         prior_stds=sys.argv[6], contrast=sys.argv[7])

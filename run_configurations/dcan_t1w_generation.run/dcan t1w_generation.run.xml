@@ -11,7 +11,7 @@
     <option name="IS_MODULE_SDK" value="false" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
-    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lab2im/dcan/t1w_generation.py" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lab2im/dcan/image_label_generation.py" />
     <option name="PARAMETERS" value="$PROJECT_DIR$/../../../../feczk001/shared/data/nnUNet/nnUNet_raw_data_base/nnUNet_raw_data/Task500_Babies8Mo/labelsTr/8mo_Template01.nii.gz $PROJECT_DIR$/../../../../feczk001/shared/data/nnUNet/lab2im_generated_images/" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
