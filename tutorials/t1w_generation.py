@@ -34,6 +34,8 @@ generation_classes = './data_example/lab2im/generation_classes.npy'
 # We specify here that we type of prior distributions to sample the GMM parameters.
 # By default prior_distribution is set to 'uniform', and in this example we want to change it to 'normal'.
 prior_distribution = 'normal'
+
+# TODO Use the priors I calculated for our images.  They are in the tutorials/data_example/dcan/t1 folder.
 # We specify here the hyperparameters of the prior distributions to sample the means of the GMM.
 # As these prior distributions are Gaussians, they are each controlled by a mean and a standard deviation.
 # Therefore, the numpy array pointed by prior_means is of size (2, K), where K is the nummber of classes specified in
