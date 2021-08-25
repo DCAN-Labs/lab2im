@@ -33,7 +33,6 @@ def main(path_label_map='./data_example/brain_label_map.nii.gz', result_dir='./g
     """
     # instantiate BrainGenerator object
     brain_generator = ImageGenerator(labels_dir=path_label_map,
-                                     generation_labels=generation_labels,
                                      prior_means=prior_means,
                                      prior_stds=prior_stds)
 
@@ -57,5 +56,5 @@ def main(path_label_map='./data_example/brain_label_map.nii.gz', result_dir='./g
 if __name__ == '__main__':
     pth_lbl_mp = sys.argv[1]
     rslt_dr = sys.argv[2]
-    main(pth_lbl_mp, rslt_dr, n_examples=int(sys.argv[3]), generation_labels=sys.argv[4], prior_means=sys.argv[5],
-         prior_stds=sys.argv[6], contrast=sys.argv[7])
+    main(pth_lbl_mp, rslt_dr, n_examples=int(sys.argv[3]), prior_means=sys.argv[4], prior_stds=sys.argv[5],
+         contrast=sys.argv[6])
