@@ -13,7 +13,8 @@ from lab2im.image_generator import ImageGenerator
 
 
 # label map to generate images from
-path_label_map = '/home/feczk001/shared/data/nnUNet/intensity_estimation/labels_folder/1mo_Template01_acpc_dc_restore.nii.gz'
+path_label_map = \
+    '/home/feczk001/shared/data/nnUNet/intensity_estimation/labels_folder/1mo_Template01_acpc_dc_restore.nii.gz'
 
 # general parameters
 n_examples = 5
@@ -24,6 +25,9 @@ output_shape = None  # shape of the output images, obtained by randomly cropping
 generation_labels = '/home/miran045/reine097/projects2/lab2im/tutorials/data_example/dcan/generation_labels.npy'
 # specify structures that we want to keep in the output label maps
 output_labels = './data_example/lab2im/segmentation_labels.npy'
+
+# TODO Find out how to generate generation_classes from our T1w images in
+#  /home/feczk001/shared/data/nnUNet/intensity_estimation/labels_folder
 # we regroup structures into K classes, so that they share the same distribution for image generation
 generation_classes = './data_example/lab2im/generation_classes.npy'
 
@@ -44,13 +48,7 @@ prior_stds = './data_example/lab2im/prior_stds.npy'
 # instantiate BrainGenerator object
 brain_generator = ImageGenerator(labels_dir=path_label_map,
                                  generation_labels=generation_labels,
-                                 output_labels=generation_labels,
-                                 # generation_classes=generation_classes,
-                                 # prior_distributions=prior_distribution,
-                                 # prior_means=prior_means,
-                                 # prior_stds=prior_stds,
-                                 # output_shape=output_shape
-                                 )
+                                 output_labels=generation_labels)
 
 # create result dir
 utils.mkdir(result_dir)
