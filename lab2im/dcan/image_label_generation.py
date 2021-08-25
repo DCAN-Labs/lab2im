@@ -6,7 +6,7 @@ import sys
 
 
 def main(path_label_map='./data_example/brain_label_map.nii.gz', result_dir='./generated_images', n_examples=5,
-         generation_labels='./data_example/generation_labels.npy',
+         generation_labels='/home/feczk001/shared/data/nnUNet/intensity_estimation/generation_labels.npy',
          prior_means='./data_example/prior_means.npy', prior_stds='./data_example/prior_stds.npy', contrast='t1'):
     """This tutorials generates 5 synthetic *T1-weighted* brain MRI scans from a label map.
     Specifically, it explains how to impose prior distributions on the GMM parameters, so that we can can generate
@@ -34,7 +34,8 @@ def main(path_label_map='./data_example/brain_label_map.nii.gz', result_dir='./g
     # instantiate BrainGenerator object
     brain_generator = ImageGenerator(labels_dir=path_label_map,
                                      prior_means=prior_means,
-                                     prior_stds=prior_stds)
+                                     prior_stds=prior_stds,
+                                     generation_labels=generation_labels)
 
     # create result dir
     utils.mkdir(result_dir)

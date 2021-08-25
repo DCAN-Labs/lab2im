@@ -13,7 +13,7 @@ from lab2im.image_generator import ImageGenerator
 
 
 # label map to generate images from
-path_label_map = 'data_example/lab2im/brain_label_map.nii.gz'
+path_label_map = '/home/feczk001/shared/data/nnUNet/nnUNet_raw_data_base/nnUNet_raw_data/Task504_AllAgesWithSkull/labelsTr/1mo_Template01_acpc_dc_restore.nii.gz'
 
 # general parameters
 n_examples = 5
@@ -21,11 +21,11 @@ result_dir = './generated_images'
 output_shape = None  # shape of the output images, obtained by randomly cropping the generated images
 
 # specify structures from which we want to generate
-generation_labels = './data_example/generation_labels.npy'
+generation_labels = './data_example/lab2im/generation_labels.npy'
 # specify structures that we want to keep in the output label maps
-output_labels = './data_example/segmentation_labels.npy'
+output_labels = './data_example/lab2im/segmentation_labels.npy'
 # we regroup structures into K classes, so that they share the same distribution for image generation
-generation_classes = './data_example/generation_classes.npy'
+generation_classes = './data_example/lab2im/generation_classes.npy'
 
 # We specify here that we type of prior distributions to sample the GMM parameters.
 # By default prior_distribution is set to 'uniform', and in this example we want to change it to 'normal'.
@@ -35,21 +35,22 @@ prior_distribution = 'normal'
 # Therefore, the numpy array pointed by prior_means is of size (2, K), where K is the nummber of classes specified in
 # generation_classes. The first row of prior_means correspond to the means of the Gaussian priors, and the second row
 # correspond to standard deviations.
-prior_means = './data_example/prior_means.npy'
+prior_means = './data_example/lab2im/prior_means.npy'
 # same as for prior_means, but for the standard deviations of the GMM.
-prior_stds = './data_example/prior_stds.npy'
+prior_stds = './data_example/lab2im/prior_stds.npy'
 
 ########################################################################################################
 
 # instantiate BrainGenerator object
 brain_generator = ImageGenerator(labels_dir=path_label_map,
-                                 generation_labels=generation_labels,
-                                 output_labels=output_labels,
-                                 generation_classes=generation_classes,
-                                 prior_distributions=prior_distribution,
-                                 prior_means=prior_means,
-                                 prior_stds=prior_stds,
-                                 output_shape=output_shape)
+                                 # generation_labels=generation_labels,
+                                 # output_labels=output_labels,
+                                 # generation_classes=generation_classes,
+                                 # prior_distributions=prior_distribution,
+                                 # prior_means=prior_means,
+                                 # prior_stds=prior_stds,
+                                 # output_shape=output_shape
+                                 )
 
 # create result dir
 utils.mkdir(result_dir)
