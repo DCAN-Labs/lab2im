@@ -44,7 +44,7 @@ prior_stds = './data_example/lab2im/prior_stds.npy'
 # instantiate BrainGenerator object
 brain_generator = ImageGenerator(labels_dir=path_label_map,
                                  generation_labels=generation_labels,
-                                 # output_labels=output_labels,
+                                 output_labels=generation_labels,
                                  # generation_classes=generation_classes,
                                  # prior_distributions=prior_distribution,
                                  # prior_means=prior_means,
