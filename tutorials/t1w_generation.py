@@ -13,7 +13,7 @@ from lab2im.image_generator import ImageGenerator
 
 
 # label map to generate images from
-path_label_map = '/home/feczk001/shared/data/nnUNet/nnUNet_raw_data_base/nnUNet_raw_data/Task504_AllAgesWithSkull/labelsTr/1mo_Template01_acpc_dc_restore.nii.gz'
+path_label_map = '/home/feczk001/shared/data/nnUNet/intensity_estimation/labels_folder/1mo_Template01_acpc_dc_restore.nii.gz'
 
 # general parameters
 n_examples = 5
@@ -21,7 +21,7 @@ result_dir = './generated_images'
 output_shape = None  # shape of the output images, obtained by randomly cropping the generated images
 
 # specify structures from which we want to generate
-generation_labels = './data_example/lab2im/generation_labels.npy'
+generation_labels = '/home/miran045/reine097/projects2/lab2im/tutorials/data_example/dcan/generation_labels.npy'
 # specify structures that we want to keep in the output label maps
 output_labels = './data_example/lab2im/segmentation_labels.npy'
 # we regroup structures into K classes, so that they share the same distribution for image generation
@@ -43,7 +43,7 @@ prior_stds = './data_example/lab2im/prior_stds.npy'
 
 # instantiate BrainGenerator object
 brain_generator = ImageGenerator(labels_dir=path_label_map,
-                                 # generation_labels=generation_labels,
+                                 generation_labels=generation_labels,
                                  # output_labels=output_labels,
                                  # generation_classes=generation_classes,
                                  # prior_distributions=prior_distribution,
