@@ -41,7 +41,7 @@ prior_distribution = 'normal'
 # Therefore, the numpy array pointed by prior_means is of size (2, K), where K is the nummber of classes specified in
 # generation_classes. The first row of prior_means correspond to the means of the Gaussian priors, and the second row
 # correspond to standard deviations.
-prior_means = './data_example/lab2im/prior_means.npy'
+prior_means = '/home/miran045/reine097/projects2/lab2im/tutorials/data_example/dcan/t1/prior_means.npy'
 # same as for prior_means, but for the standard deviations of the GMM.
 prior_stds = './data_example/lab2im/prior_stds.npy'
 
@@ -50,8 +50,10 @@ prior_stds = './data_example/lab2im/prior_stds.npy'
 # instantiate BrainGenerator object
 brain_generator = ImageGenerator(labels_dir=path_label_map,
                                  generation_labels=generation_labels,
-                                 output_labels=generation_labels,
-                                 generation_classes=generation_classes)
+                                 # output_labels=generation_labels,
+                                 # generation_classes=generation_classes,
+                                 # prior_means=prior_means
+                                 )
 
 # create result dir
 utils.mkdir(result_dir)
