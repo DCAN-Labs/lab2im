@@ -29,13 +29,13 @@ output_labels = './data_example/lab2im/segmentation_labels.npy'
 # TODO Find out how to generate generation_classes from our T1w images in
 #  /home/feczk001/shared/data/nnUNet/intensity_estimation/labels_folder
 # we regroup structures into K classes, so that they share the same distribution for image generation
-generation_classes = './data_example/lab2im/generation_classes.npy'
+generation_classes = '/home/miran045/reine097/projects2/lab2im/tutorials/data_example/dcan/generation_classes.npy'
 
 # We specify here that we type of prior distributions to sample the GMM parameters.
 # By default prior_distribution is set to 'uniform', and in this example we want to change it to 'normal'.
 prior_distribution = 'normal'
 
-# TODO Use the priors I calculated for our images.  They are in the tutorials/data_example/dcan/t1 folder.
+# TODO Use the priors I calculated for our images.  They are in the tutorials/data_example/dcan/
 # We specify here the hyperparameters of the prior distributions to sample the means of the GMM.
 # As these prior distributions are Gaussians, they are each controlled by a mean and a standard deviation.
 # Therefore, the numpy array pointed by prior_means is of size (2, K), where K is the nummber of classes specified in
@@ -50,7 +50,8 @@ prior_stds = './data_example/lab2im/prior_stds.npy'
 # instantiate BrainGenerator object
 brain_generator = ImageGenerator(labels_dir=path_label_map,
                                  generation_labels=generation_labels,
-                                 output_labels=generation_labels)
+                                 output_labels=generation_labels,
+                                 generation_classes=generation_classes)
 
 # create result dir
 utils.mkdir(result_dir)
