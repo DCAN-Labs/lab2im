@@ -154,7 +154,10 @@ brain_generator = ImageGenerator(labels_dir=path_label_map,
                                  generation_labels=generation_labels,
                                  output_labels=generation_labels,
                                  generation_classes=generation_classes,
-                                 # prior_means=prior_means
+                                 prior_distributions=prior_distribution,
+                                 # prior_means=prior_means,
+                                 # prior_stds=prior_stds,
+                                 # output_shape=output_shape
                                  )
 
 # create result dir
