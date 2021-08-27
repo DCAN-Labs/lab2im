@@ -8,13 +8,15 @@
 
 import os
 import time
+
+import numpy as np
+
 from lab2im import utils
 from lab2im.image_generator import ImageGenerator
 
-
 # label map to generate images from
 path_label_map = \
-    '/home/feczk001/shared/data/nnUNet/intensity_estimation/labels_folder/1mo_Template01_acpc_dc_restore.nii.gz'
+    '/home/miran045/reine097/GATES_SEGS/Jedgroup_atlas_editing/ForLab2Im/1mo/sub-198549/aseg_acpc_final.nii.gz'
 
 # general parameters
 n_examples = 5
@@ -22,14 +24,68 @@ result_dir = './generated_images'
 output_shape = None  # shape of the output images, obtained by randomly cropping the generated images
 
 # specify structures from which we want to generate
-generation_labels = '/home/miran045/reine097/projects2/lab2im/tutorials/data_example/dcan/generation_labels.npy'
-# specify structures that we want to keep in the output label maps
-output_labels = './data_example/lab2im/segmentation_labels.npy'
+# Here we specify the structures in the label maps for which we want to generate intensities.
+# This is given as a list of label values, which do not necessarily need to be present in every label map.
+# However, these labels must follow a specific order: first the non-sided labels, then all the left labels, and finally
+# the corresponding right labels in the same order as the left ones.
+generation_labels = np.array(
+    [0,  # background
+     24,  # CSF
+     14,  # 3rd-Ventricle
+     15,  # 4th-Ventricle
+     16,  # Brain-Stem
+     77,  # WM-hypointensities
+     85,  # Optic-Chiasm
+     172,  # Vermis
+     1,  # Left-Cerebral-Exterior
+     2,  # left white matter
+     3,  # left cerebral cortex
+     4,  # left lateral ventricle
+     5,  # Left-Inf-Lat-Vent
+     6,  # Left-Cerebellum-Exterior
+     7,  # Left-Cerebellum-White-Matter
+     8,  # Left-Cerebellum-Cortex
+     10,  # Left-Thalamus-Proper
+     11,  # Left-Caudate
+     12,  # Left-Putamen
+     13,  # Left-Pallidum
+     17,  # left hippocampus
+     18,  # Left-Amygdala
+     26,  # Left-Accumbens-area
+     28,  # Left-VentralDC
+     30,  # Left-vessel
+     31,  # Left-choroid-plexus
+     41,  # right white matter
+     42,  # right cerebral cortex
+     43,  # right lateral ventricle
+     44,  # Right-Inf-Lat-Vent
+     46,  # Right-Cerebellum-White-Matter
+     47,  # Right-Cerebellum-Cortex
+     49,  # Right-Thalamus-Proper
+     50,  # Right-Caudate
+     51,  # Right-Putamen
+     52,  # Right-Pallidum
+     53,  # right hippocampus
+     54,  # Right-Amygdala
+     58,  # Right-Accumbens-area
+     60,  # Right-VentralDC
+     62,  # Right-vessel
+     63])  # Right-choroid-plexus
 
-# TODO Find out how to generate generation_classes from our T1w images in
-#  /home/feczk001/shared/data/nnUNet/intensity_estimation/labels_folder
+# specify structures that we want to keep in the output label maps
+output_labels = np.copy(generation_labels)
+
 # we regroup structures into K classes, so that they share the same distribution for image generation
-generation_classes = '/home/miran045/reine097/projects2/lab2im/tutorials/data_example/dcan/generation_classes.npy'
+# We regroup labels with similar tissue types into K "classes", so that intensities of similar regions are sampled
+# from the same Gaussian distribution. This is achieved by providing a list indicating the class of each label.
+# It should have the same length as generation_labels, and follow the same order. Importantly the class values must be
+# between 0 and K-1, where K is the total number of different classes.
+#
+# Example: (continuing the previous one)  generation_labels = [0, 24, 507, 2, 3, 4, 17, 25, 41, 42, 43, 53, 57]
+#                                        generation_classes = [0,  1,   2, 3, 4, 5,  4,  6,  7,  8,  9,  8, 10]
+# In this example labels 3 and 17 are in the same *class* 4 (that has nothing to do with *label* 4), and thus will be
+# associated to the same Gaussian distribution when sampling the GMM.
+generation_classes = np.arange(len(generation_labels))
 
 # We specify here that we type of prior distributions to sample the GMM parameters.
 # By default prior_distribution is set to 'uniform', and in this example we want to change it to 'normal'.
@@ -50,8 +106,8 @@ prior_stds = './data_example/lab2im/prior_stds.npy'
 # instantiate BrainGenerator object
 brain_generator = ImageGenerator(labels_dir=path_label_map,
                                  generation_labels=generation_labels,
-                                 # output_labels=generation_labels,
-                                 # generation_classes=generation_classes,
+                                 output_labels=generation_labels,
+                                 generation_classes=generation_classes,
                                  # prior_means=prior_means
                                  )
 
@@ -59,7 +115,6 @@ brain_generator = ImageGenerator(labels_dir=path_label_map,
 utils.mkdir(result_dir)
 
 for n in range(n_examples):
-
     # generate new image and corresponding labels
     start = time.time()
     im, lab = brain_generator.generate_image()
