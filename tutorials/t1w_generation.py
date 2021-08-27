@@ -137,7 +137,6 @@ generation_classes = np.array(
 # By default prior_distribution is set to 'uniform', and in this example we want to change it to 'normal'.
 prior_distribution = 'normal'
 
-# TODO Use the priors I calculated for our images.  They are in the tutorials/data_example/dcan/
 # We specify here the hyperparameters of the prior distributions to sample the means of the GMM.
 # As these prior distributions are Gaussians, they are each controlled by a mean and a standard deviation.
 # Therefore, the numpy array pointed by prior_means is of size (2, K), where K is the nummber of classes specified in
@@ -157,8 +156,7 @@ brain_generator = ImageGenerator(labels_dir=path_label_map,
                                  prior_distributions=prior_distribution,
                                  prior_means=prior_means,
                                  prior_stds=prior_stds,
-                                 # output_shape=output_shape
-                                 )
+                                 output_shape=output_shape)
 
 # create result dir
 utils.mkdir(result_dir)
