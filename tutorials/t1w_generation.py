@@ -38,9 +38,9 @@ generation_labels = np.array(
      85,  # Optic-Chiasm
      172,  # Vermis
      1,  # Left-Cerebral-Exterior
-     2,  # left white matter
-     3,  # left cerebral cortex
-     4,  # left lateral ventricle
+     2,  # Left-Cerebral-White-Matter
+     3,  # Left-Cerebral-Cortex
+     4,  # Left-Lateral-Ventricle
      5,  # Left-Inf-Lat-Vent
      6,  # Left-Cerebellum-Exterior
      7,  # Left-Cerebellum-White-Matter
@@ -49,16 +49,18 @@ generation_labels = np.array(
      11,  # Left-Caudate
      12,  # Left-Putamen
      13,  # Left-Pallidum
-     17,  # left hippocampus
+     17,  # Left-Hippocampus
      18,  # Left-Amygdala
      26,  # Left-Accumbens-area
      28,  # Left-VentralDC
      30,  # Left-vessel
      31,  # Left-choroid-plexus
-     41,  # right white matter
-     42,  # right cerebral cortex
-     43,  # right lateral ventricle
+     40,  # Right-Cerebral-Exterior
+     41,  # Right-Cerebral-White-Matter
+     42,  # Right-Cerebral-Cortex
+     43,  # Right-Lateral-Ventricle
      44,  # Right-Inf-Lat-Vent
+     45,  # Right-Cerebellum-Exterior
      46,  # Right-Cerebellum-White-Matter
      47,  # Right-Cerebellum-Cortex
      49,  # Right-Thalamus-Proper
@@ -85,7 +87,51 @@ output_labels = np.copy(generation_labels)
 #                                        generation_classes = [0,  1,   2, 3, 4, 5,  4,  6,  7,  8,  9,  8, 10]
 # In this example labels 3 and 17 are in the same *class* 4 (that has nothing to do with *label* 4), and thus will be
 # associated to the same Gaussian distribution when sampling the GMM.
-generation_classes = np.arange(len(generation_labels))
+generation_classes = np.array(
+    [0,  # background
+     1,  # CSF
+     2,  # 3rd-Ventricle
+     3,  # 4th-Ventricle
+     4,  # Brain-Stem
+     5,  # WM-hypointensities
+     6,  # Optic-Chiasm
+     7,  # Vermis
+     8,  # Left-Cerebral-Exterior
+     9,  # Left-Cerebral-White-Matter
+     10,  # Left-Cerebral-Cortex
+     11,  # Left-Lateral-Ventricle
+     12,  # Left-Inf-Lat-Vent
+     13,  # Left-Cerebellum-Exterior
+     14,  # Left-Cerebellum-White-Matter
+     15,  # Left-Cerebellum-Cortex
+     16,  # Left-Thalamus-Proper
+     17,  # Left-Caudate
+     18,  # Left-Putamen
+     19,  # Left-Pallidum
+     20,  # Left-Hippocampus
+     21,  # Left-Amygdala
+     22,  # Left-Accumbens-area
+     23,  # Left-VentralDC
+     24,  # Left-vessel
+     25,  # Left-choroid-plexus
+     8,  # Right-Cerebral-Exterior
+     9,  # Right-Cerebral-White-Matter
+     10,  # Right-Cerebral-Cortex
+     11,  # Right-Lateral-Ventricle
+     12,  # Right-Inf-Lat-Vent
+     13,  # Right-Cerebellum-Exterior
+     14,  # Right-Cerebellum-White-Matter
+     15,  # Right-Cerebellum-Cortex
+     16,  # Right-Thalamus-Proper
+     17,  # Right-Caudate
+     18,  # Right-Putamen
+     19,  # Right-Pallidum
+     20,  # right hippocampus
+     21,  # Right-Amygdala
+     22,  # Right-Accumbens-area
+     23,  # Right-VentralDC
+     24,  # Right-vessel
+     25])  # Right-choroid-plexus
 
 # We specify here that we type of prior distributions to sample the GMM parameters.
 # By default prior_distribution is set to 'uniform', and in this example we want to change it to 'normal'.
