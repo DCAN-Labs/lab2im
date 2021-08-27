@@ -145,7 +145,7 @@ prior_distribution = 'normal'
 # correspond to standard deviations.
 prior_means = '/home/miran045/reine097/projects2/lab2im/tutorials/data_example/dcan/t1/prior_means.npy'
 # same as for prior_means, but for the standard deviations of the GMM.
-prior_stds = './data_example/lab2im/prior_stds.npy'
+prior_stds = '/home/miran045/reine097/projects2/lab2im/tutorials/data_example/dcan/t1/prior_stds.npy'
 
 ########################################################################################################
 
@@ -156,7 +156,7 @@ brain_generator = ImageGenerator(labels_dir=path_label_map,
                                  generation_classes=generation_classes,
                                  prior_distributions=prior_distribution,
                                  prior_means=prior_means,
-                                 # prior_stds=prior_stds,
+                                 prior_stds=prior_stds,
                                  # output_shape=output_shape
                                  )
 
