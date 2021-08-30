@@ -1,6 +1,6 @@
 import os
 import time
-import sys
+import ntpath
 
 import numpy as np
 
@@ -8,25 +8,27 @@ from lab2im import utils
 from lab2im.image_generator import ImageGenerator
 
 
-def generate_images(priors_folder, weighting_name):
-    """# This program generates synthetic T1-weighted or T2-weighted brain MRI scans from a label map.  Specifically, it
+def path_leaf(path):
+    head, tail = ntpath.split(path)
+    return tail or ntpath.basename(head)
+
+
+def generate_images(path_label_map, priors_folder, result_dir, n_examples, weighting_name, file_prefix):
+    """This program generates synthetic T1-weighted or T2-weighted brain MRI scans from a label map.  Specifically, it
     allows you to impose prior distributions on the GMM parameters, so that you can can generate images of desired
     intensity distribution.  You can generate images of desired contrast by imposing specified prior distributions from
     which we sample the means and standard deviations of the GMM.
 
     Keyword arguments:
+    path_label_map -- label map to generate images from
     priors_folder -- folder containing prior_means.npy and prior_stds.npy files
+    result_dir -- folder to write synthetic images to
     weighting_name -- should be either 't1' or 't2'.  Semantically, the value is immaterial---it is simply used to help
                       name the output files.
+    n_examples -- number of synthetic images to generate
     """
 
-    # label map to generate images from
-    path_label_map = \
-        '/home/miran045/reine097/GATES_SEGS/Jedgroup_atlas_editing/ForLab2Im/1mo/sub-198549/aseg_acpc_final.nii.gz'
-
     # general parameters
-    n_examples = 5
-    result_dir = '../../tutorials/generated_images'
     output_shape = None  # shape of the output images, obtained by randomly cropping the generated images
 
     # specify structures from which we want to generate
@@ -174,12 +176,13 @@ def generate_images(priors_folder, weighting_name):
         end = time.time()
         print('generation {0:d} took {1:.01f}s'.format(n, end - start))
 
+        input_file_name = os.path.splitext(path_leaf(path_label_map))[0]
+        if '.' in input_file_name:
+            dot_pos = input_file_name.index('.')
+            input_file_name = input_file_name[:dot_pos]
+        output_file_name = input_file_name + '_' + file_prefix
         # save output image and label map
         utils.save_volume(im, brain_generator.aff, brain_generator.header,
-                          os.path.join(result_dir, '%s_%s.nii.gz' % (weighting_name, n)))
+                          os.path.join(result_dir, '%s_%s_%s.nii.gz' % (output_file_name, n, weighting_name)))
         utils.save_volume(lab, brain_generator.aff, brain_generator.header,
-                          os.path.join(result_dir, '%s_labels_%s.nii.gz' % (weighting_name, n)))
-
-
-if __name__ == "__main__":
-    generate_images(sys.argv[1], sys.argv[2])
+                          os.path.join(result_dir, '%s_%s.nii.gz' % (output_file_name, n)))
