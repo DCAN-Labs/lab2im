@@ -66,7 +66,7 @@ im, lab = brain_generator.generate_image()
 - [tutorials](/tutorials): simple scripts explaining how to easily generate images. Start with 
 [simple_example.py](tutorials/simple_example.py), which shows how to generate images in 2 lines. Then have a look at
 [random_contast_generation.py](tutorials/random_contast_generation.py) that introduces some functionalities of 
-`ImageGenerator`. Finally, [t1w_generation.py](tutorials/data_example/dcan/image_generation.py) examplifies how to impose prior distributions 
+`ImageGenerator`. Finally, [t1w_generation.py](lab2im/dcan/image_generation.py) examplifies how to impose prior distributions 
 to the Gaussian distributions of the GMM, in order to sample image of desired intensity distributions.
 
 

@@ -26,7 +26,7 @@ def generate_images(priors_folder, weighting_name):
 
     # general parameters
     n_examples = 5
-    result_dir = '../../generated_images'
+    result_dir = '../../tutorials/generated_images'
     output_shape = None  # shape of the output images, obtained by randomly cropping the generated images
 
     # specify structures from which we want to generate
