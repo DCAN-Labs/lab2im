@@ -13,7 +13,7 @@ def path_leaf(path):
     return tail or ntpath.basename(head)
 
 
-def generate_images(path_label_map, priors_folder, result_dir, n_examples, weighting_name, file_prefix):
+def generate_images(path_label_map, priors_folder, result_dir, n_examples):
     """This program generates synthetic T1-weighted or T2-weighted brain MRI scans from a label map.  Specifically, it
     allows you to impose prior distributions on the GMM parameters, so that you can can generate images of desired
     intensity distribution.  You can generate images of desired contrast by imposing specified prior distributions from
@@ -150,9 +150,17 @@ def generate_images(path_label_map, priors_folder, result_dir, n_examples, weigh
     # Therefore, the numpy array pointed by prior_means is of size (2, K), where K is the nummber of classes specified
     # in generation_classes. The first row of prior_means correspond to the means of the Gaussian priors, and the second
     # row correspond to standard deviations.
-    prior_means = os.path.join(priors_folder, 'prior_means.npy')
+    t1_prior_means_file = os.path.join(priors_folder, 't1', 'prior_means.npy')
+    t1_prior_means = np.load(t1_prior_means_file)
+    t2_prior_means_file = os.path.join(priors_folder, 't2', 'prior_means.npy')
+    t2_prior_means = np.load(t2_prior_means_file)
+    prior_means = np.concatenate((t1_prior_means, t2_prior_means))
     # same as for prior_means, but for the standard deviations of the GMM.
-    prior_stds = os.path.join(priors_folder, 'prior_stds.npy')
+    t1_prior_stds_file = os.path.join(priors_folder, 't1', 'prior_stds.npy')
+    t1_prior_stds = np.load(t1_prior_stds_file)
+    t2_prior_stds_file = os.path.join(priors_folder, 't2', 'prior_stds.npy')
+    t2_prior_stds = np.load(t2_prior_stds_file)
+    prior_stds = np.concatenate((t1_prior_stds, t2_prior_stds))
 
     ########################################################################################################
 
@@ -164,7 +172,9 @@ def generate_images(path_label_map, priors_folder, result_dir, n_examples, weigh
                                      prior_distributions=prior_distribution,
                                      prior_means=prior_means,
                                      prior_stds=prior_stds,
-                                     output_shape=output_shape)
+                                     output_shape=output_shape,
+                                     n_channels=2,
+                                     use_specific_stats_for_channel=True)
 
     # create result dir
     utils.mkdir(result_dir)
@@ -173,6 +183,8 @@ def generate_images(path_label_map, priors_folder, result_dir, n_examples, weigh
         # generate new image and corresponding labels
         start = time.time()
         im, lab = brain_generator.generate_image()
+        t1_im = im[:, :, :, 0]
+        t2_im = im[:, :, :, 1]
         end = time.time()
         print('generation {0:d} took {1:.01f}s'.format(n, end - start))
 
@@ -180,9 +192,11 @@ def generate_images(path_label_map, priors_folder, result_dir, n_examples, weigh
         if '.' in input_file_name:
             dot_pos = input_file_name.index('.')
             input_file_name = input_file_name[:dot_pos]
-        output_file_name = input_file_name + '_' + file_prefix
+        output_file_name = input_file_name
         # save output image and label map
-        utils.save_volume(im, brain_generator.aff, brain_generator.header,
-                          os.path.join(result_dir, '%s_%s_%s.nii.gz' % (output_file_name, n, weighting_name)))
+        utils.save_volume(t1_im, brain_generator.aff, brain_generator.header,
+                          os.path.join(result_dir, '%s_%s_%s.nii.gz' % (output_file_name, n, '0000')))
+        utils.save_volume(t2_im, brain_generator.aff, brain_generator.header,
+                          os.path.join(result_dir, '%s_%s_%s.nii.gz' % (output_file_name, n, '0001')))
         utils.save_volume(lab, brain_generator.aff, brain_generator.header,
                           os.path.join(result_dir, '%s_%s.nii.gz' % (output_file_name, n)))
