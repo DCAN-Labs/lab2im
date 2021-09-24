@@ -143,7 +143,7 @@ def generate_images(path_label_map, priors_folder, result_dir, n_examples):
 
     # We specify here that we type of prior distributions to sample the GMM parameters.
     # By default prior_distribution is set to 'uniform', and in this example we want to change it to 'normal'.
-    prior_distribution = 'normal'
+    prior_distribution = 'uniform'
 
     # We specify here the hyperparameters of the prior distributions to sample the means of the GMM.
     # As these prior distributions are Gaussians, they are each controlled by a mean and a standard deviation.
