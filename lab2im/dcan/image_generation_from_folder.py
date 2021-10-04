@@ -7,8 +7,8 @@ from lab2im.dcan.image_generation import generate_images
 
 def generate_images_from_folder(input_folder, output_folder, priors_folder, image_count):
     only_files = [f for f in listdir(input_folder) if isfile(join(input_folder, f))]
-    for file_name in only_files:
-        generate_images(join(input_folder, file_name), priors_folder, output_folder, image_count)
+    total_image_count = len(only_files) * image_count
+    generate_images(input_folder, priors_folder, output_folder, total_image_count)
 
 
 if __name__ == "__main__":

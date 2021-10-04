@@ -143,7 +143,7 @@ def generate_images(path_label_map, priors_folder, result_dir, n_examples):
 
     # We specify here that we type of prior distributions to sample the GMM parameters.
     # By default prior_distribution is set to 'uniform', and in this example we want to change it to 'normal'.
-    prior_distribution = 'uniform'
+    prior_distribution = 'normal'
 
     # We specify here the hyperparameters of the prior distributions to sample the means of the GMM.
     # As these prior distributions are Gaussians, they are each controlled by a mean and a standard deviation.
@@ -188,11 +188,7 @@ def generate_images(path_label_map, priors_folder, result_dir, n_examples):
         end = time.time()
         print('generation {0:d} took {1:.01f}s'.format(n, end - start))
 
-        input_file_name = os.path.splitext(path_leaf(path_label_map))[0]
-        if '.' in input_file_name:
-            dot_pos = input_file_name.index('.')
-            input_file_name = input_file_name[:dot_pos]
-        output_file_name = input_file_name
+        output_file_name = "lab2im_generated_{}".format(f'{n:03}')
         # save output image and label map
         utils.save_volume(t1_im, brain_generator.aff, brain_generator.header,
                           os.path.join(result_dir, '%s_%s_%s.nii.gz' % (output_file_name, n, '0000')))
